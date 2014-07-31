@@ -64,6 +64,7 @@ You can add the following options inside config.yaml, descriptions are inline:
         mode: "open" # Default is list, shows the copy/paste output.  open attempts to open directly in Spotify (only tested on Mac)
         region_filter: "US" # Filters tracks by only that market (2-letter code)
         show_faiulres: on # Displays the tracks that did not match a Spotify ID
+        tiebreak: "first" # Need to break ties when then are multiple tracks.  Default is popularity.
         regex: [
             {
                 field: "albumartist", # Field in the item object to regex
