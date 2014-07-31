@@ -18,6 +18,7 @@ class SpotifyPlugin(BeetsPlugin):
         super(SpotifyPlugin, self).__init__()
         self.config.add({
             'mode': 'list',
+            'tiebreak' : 'popularity',
             'show_failures': False,
             'verbose': False,
             'artist_field': 'albumartist',
@@ -109,12 +110,13 @@ class SpotifyPlugin(BeetsPlugin):
             
             # Simplest, take the first result
             chosen_result = None
-            if r_data:
+            if len(r_data) == 1 or self.config['tiebreak'].get() == "first":
                 self.out("Spotify track(s) found, count: " + str(len(r_data)))
                 chosen_result = r_data[0]
-
-            # Use the popularity filter
-            # pprint(max(r_data, key=lambda x: x['popularity']))
+            else:
+                # Use the popularity filter
+                self.out("Most popular track chosen, count: " + str(len(r_data)))
+                chosen_result = max(r_data, key=lambda x: x['popularity'])
 
             if chosen_result:
                 results.append(chosen_result)
