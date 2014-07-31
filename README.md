@@ -55,3 +55,24 @@ Example
     http://open.spotify.com/track/7cG68oOj0pZYoSVuP1Jzot
     http://open.spotify.com/track/4qPtIDBT2iVQv13tjpXMDt
     #########################
+
+Configuration Options
+=====================
+You can add the following options inside config.yaml, descriptions are inline:
+
+    spotify:
+        mode: "open" # Default is list, shows the copy/paste output.  open attempts to open directly in Spotify (only tested on Mac)
+        region_filter: "US" # Filters tracks by only that market (2-letter code)
+        show_faiulres: on # Displays the tracks that did not match a Spotify ID
+        regex: [
+            {
+                field: "albumartist", # Field in the item object to regex
+                search: "Something", # String to look for
+                replace: "Replaced" # Replacement value
+            },
+            {
+                field: "title",
+                search: "Something Else",
+                replace: "AlsoReplaced"
+            }
+        ]
