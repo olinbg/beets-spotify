@@ -5,6 +5,7 @@ from operator import attrgetter
 from beets.plugins import BeetsPlugin
 from beets.ui import decargs
 from beets import config, ui, library
+from requests.exceptions import HTTPError
 
 class SpotifyPlugin(BeetsPlugin):
 
@@ -57,7 +58,7 @@ class SpotifyPlugin(BeetsPlugin):
             self.config['show_failures'].set(True)
 
         if self.config['mode'].get() not in ['list', 'open']:
-            print self.config['mode'] + " is not a valid mode"
+            print self.config['mode'].get() + " is not a valid mode"
             return False
 
         self.opts = opts
@@ -113,7 +114,7 @@ class SpotifyPlugin(BeetsPlugin):
             if len(r_data) == 1 or self.config['tiebreak'].get() == "first":
                 self.out("Spotify track(s) found, count: " + str(len(r_data)))
                 chosen_result = r_data[0]
-            else:
+            elif len(r_data) > 1:
                 # Use the popularity filter
                 self.out("Most popular track chosen, count: " + str(len(r_data)))
                 chosen_result = max(r_data, key=lambda x: x['popularity'])
